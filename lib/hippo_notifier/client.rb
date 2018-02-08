@@ -10,14 +10,21 @@ module HippoNotifier
       @credentials = args[:credentials]
     end
 
-    def submit(notification_hash)
-      @notification = HippoNotifier::Notification.new(notification_hash)
+    def submit(notification_hash, options = {})
+      @notification = HippoNotifier::Notification.new(notification_hash, options)
       HippoNotifier::NotificationManager.process(@notification, @credentials)
     end
   end
 end
 
-
+#options:
+#{
+#  callback_class: ,
+#  callback_method: ,
+#  callback_args: nil
+#}
+#
+#args:
 # {
 #   credentials: {
 #     twilio: {
