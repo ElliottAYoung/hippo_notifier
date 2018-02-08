@@ -1,5 +1,5 @@
 require "hippo_notifier/version"
+require "hippo_notifier/client"
 
 module HippoNotifier
-  # Your code goes here...
 end
