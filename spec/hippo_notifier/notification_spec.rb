@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe HippoNotifier::Notification do
-  let(:args) { { url: "test.com", sender_id: 1, receiver_id: 1, notification_type: "Test", medium_array: [], batchable: false } }
+  let(:args) { { sender_id: 1, receiver_id: 1, notification_type: "Test", medium_array: [], batchable: false } }
   let(:notification) { HippoNotifier::Notification.new(args) }
 
   describe '#initialize' do
@@ -17,10 +17,6 @@ RSpec.describe HippoNotifier::Notification do
       expect(notification.receiver_id).to_not be_nil
     end
 
-    it 'should set #notification_type' do
-      expect(notification.notification_type).to_not be_nil
-    end
-
     it 'should set #medium_array' do
       expect(notification.medium_array).to_not be_nil
     end
@@ -31,20 +27,59 @@ RSpec.describe HippoNotifier::Notification do
   end
 
   describe '#url' do
+    it 'should return a String' do
+      expect(notification.url).to be_a_kind_of(String)
+    end
+
+    it 'should default to an expected value' do
+      args[:url] = nil
+      notification = HippoNotifier::Notification.new(args)
+
+      expect(notification.url).to eq("")
+    end
   end
 
   describe '#sender_id' do
+    it 'should return a Integer' do
+      expect(notification.sender_id).to be_a_kind_of(Integer)
+    end
+
+    it 'should raise an exception if missing' do
+      args[:sender_id] = nil
+      expect{ HippoNotifier::Notification.new(args) }.to raise_error(HippoNotifier::Errors::MissingParameterError)
+    end
   end
 
   describe '#receiver_id' do
-  end
+    it 'should return a Integer' do
+      expect(notification.receiver_id).to be_a_kind_of(Integer)
+    end
 
-  describe '#notification_type' do
+    it 'should raise an exception if missing' do
+      args[:receiver_id] = nil
+      expect{ HippoNotifier::Notification.new(args) }.to raise_error(HippoNotifier::Errors::MissingParameterError)
+    end
   end
 
   describe '#medium_array' do
+    it 'should return an Array' do
+      expect(notification.medium_array).to be_a_kind_of(Array)
+    end
+
+    it 'should default to an expected value' do
+      args[:medium_array] = nil
+      notification = HippoNotifier::Notification.new(args)
+
+      expect(notification.medium_array).to eq([])
+    end
   end
 
   describe '#batchable' do
+    it 'should default to an expected value' do
+      args[:batchable] = nil
+      notification = HippoNotifier::Notification.new(args)
+
+      expect(notification.batchable).to be false
+    end
   end
 end
