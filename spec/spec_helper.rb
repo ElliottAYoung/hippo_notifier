@@ -1,3 +1,22 @@
+require 'simplecov'
+SimpleCov.start do
+  add_filter do |source_file|
+    source_file.filename.include?("spec")
+  end
+
+  add_group "Errors" do |src_file|
+    src_file.filename.include?("/errors")
+  end
+
+  add_group "Services" do |src_file|
+    src_file.filename.include?("/services")
+  end
+
+  add_group "Base Files" do |src_file|
+    !src_file.filename.include?("/errors") && !src_file.filename.include?("/services")
+  end
+end
+
 require "bundler/setup"
 require "hippo_notifier"
 

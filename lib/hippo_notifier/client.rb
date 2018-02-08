@@ -1,13 +1,17 @@
 require 'hippo_notifier/notification'
 require 'hippo_notifier/notification_manager'
-require 'hippo_notifier/services/*'
+require 'hippo_notifier/service'
+require 'hippo_notifier/services/mailgun'
+require 'hippo_notifier/services/pusher'
+require 'hippo_notifier/services/twilio'
+require 'hippo_notifier/errors/missing_parameter_error'
 
 module HippoNotifier
   class Client
     attr_reader :credentials
 
     def initialize(args = {})
-      @credentials = args[:credentials]
+      @credentials = args[:credentials] || {}
     end
 
     def submit(notification_hash, options = {})
