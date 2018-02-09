@@ -12,8 +12,12 @@ SimpleCov.start do
     src_file.filename.include?("/services")
   end
 
+  add_group "Batches" do |src_file|
+    src_file.filename.include?("/batches")
+  end
+
   add_group "Base Files" do |src_file|
-    !src_file.filename.include?("/errors") && !src_file.filename.include?("/services")
+    !src_file.filename.include?("/errors") && !src_file.filename.include?("/services") && !src_file.filename.include?("/batches")
   end
 end
 

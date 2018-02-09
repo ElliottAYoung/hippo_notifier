@@ -1,6 +1,7 @@
 module HippoNotifier
   class Notification
-    attr_reader :message_data, :url, :sender_id, :receiver_id, :mediums, :batchable
+    attr_reader :message_data, :url, :sender_id, :receiver_id, :mediums
+    attr_accessor :batchable
 
     def initialize(args = {})
       @message_data      = args[:message_data] || {}

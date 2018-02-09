@@ -1,18 +1,23 @@
 module HippoNotifier
   module NotificationManager
-    def self.process(notification, credentials, options = {})
+    def self.process(notification, client, options = {})
       results = []
 
-      credentials.keys.each do |service_name|
+      client.credentials.keys.each do |service_name|
         if valid_service?(service_name)
           args = {
             notification: notification,
-            service_credentials: credentials[service_name.to_sym],
+            service_credentials: client.credentials[service_name.to_sym],
             options: options[service_name.to_sym]
           }
 
           service_class = service_name.to_s.split('_').map(&:capitalize).join
-          results << HippoNotifier::Services.const_get(service_class).send('submit', args)
+
+          if notification.batchable
+            results << HippoNotifier::Batches::Manager.manage(args, client, options[:batch])
+          else
+            results << HippoNotifier::Services.const_get(service_class).send('submit', args)
+          end
         end
       end
 

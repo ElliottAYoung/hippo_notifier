@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "twilio-ruby", "~> 4.11.1"
   spec.add_dependency "pusher"
+  spec.add_dependency "delayed_job_active_record", "~> 4.1.2"
 end
