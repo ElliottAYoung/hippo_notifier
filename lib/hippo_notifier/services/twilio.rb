@@ -5,7 +5,7 @@ module HippoNotifier
         @creds = args[:service_credentials]
         @notification = args[:notification]
 
-        return nil unless @notification.mediums.include?(:sms)
+        return nil unless @notification.medium_array.include?(:sms)
 
         begin
           client.account.messages.create(from: @creds[:from_number] , to: to, body: message)

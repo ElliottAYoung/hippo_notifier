@@ -1,6 +1,8 @@
 module HippoNotifier
   module NotificationManager
     def self.process(notification, credentials, options = {})
+      results = []
+
       credentials.keys.each do |service_name|
         if valid_service?(service_name)
           args = {
@@ -10,16 +12,18 @@ module HippoNotifier
           }
 
           service_class = service_name.to_s.split('_').map(&:capitalize).join
-          HippoNotifier::Services.const_get(service_class).send('submit', args)
+          results << HippoNotifier::Services.const_get(service_class).send('submit', args)
         end
       end
+
+      results
     end
 
     private
 
     class << self
       def valid_service?(service_name)
-        HippoNotifier::Services::VALID.include?(service_name.to_s)
+        HippoNotifier::Service::VALID.include?(service_name.to_s)
       end
     end
   end

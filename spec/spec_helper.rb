@@ -17,6 +17,8 @@ SimpleCov.start do
   end
 end
 
+SimpleCov.minimum_coverage_by_file 95
+
 require "bundler/setup"
 require "hippo_notifier"
 

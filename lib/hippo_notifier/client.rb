@@ -1,5 +1,6 @@
 require 'hippo_notifier/notification'
 require 'hippo_notifier/notification_manager'
+require 'hippo_notifier/response'
 require 'hippo_notifier/service'
 require 'hippo_notifier/services/mailgun'
 require 'hippo_notifier/services/pusher'
@@ -16,7 +17,8 @@ module HippoNotifier
 
     def submit(notification_hash, options = {})
       @notification = HippoNotifier::Notification.new(notification_hash)
-      HippoNotifier::NotificationManager.process(@notification, @credentials, options)
+      results = HippoNotifier::NotificationManager.process(@notification, @credentials, options)
+      HippoNotifier::Response.new(results)
     end
   end
 end
