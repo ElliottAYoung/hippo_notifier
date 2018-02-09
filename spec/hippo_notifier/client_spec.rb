@@ -10,7 +10,11 @@ RSpec.describe HippoNotifier::Client do
   end
 
   describe '#submit' do
+    let(:args) { { sender_id: 1, receiver_id: 1, mediums: [], batchable: false } }
+
     it 'should return a HippoNotifier::Response object' do
+      result = HippoNotifier::Client.new.submit(args)
+      expect(result).to be_a_kind_of(HippoNotifier::Response)
     end
   end
 

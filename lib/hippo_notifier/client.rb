@@ -24,12 +24,20 @@ module HippoNotifier
 end
 
 #options:
-#{
-#  klass: 'something',
-#  method: 'something',
-#  object_hash: {user: user}
-#}
-#
+# { {
+# twilio: {
+#   phone_number: "something",
+# },
+# pusher: {
+#   channel: "something",
+#   event: "something",
+#   adapter: "something"
+# },
+# action_mailer: {
+#   klass: "something",
+#   object_hash: {},
+#   method: "something"
+# } }
 #args:
 # {
 #   credentials: {

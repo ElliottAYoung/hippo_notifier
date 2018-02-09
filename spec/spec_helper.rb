@@ -21,6 +21,7 @@ SimpleCov.minimum_coverage_by_file 95
 
 require "bundler/setup"
 require "hippo_notifier"
+require "pry"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

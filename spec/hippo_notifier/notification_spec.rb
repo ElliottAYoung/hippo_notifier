@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe HippoNotifier::Notification do
-  let(:args) { { sender_id: 1, receiver_id: 1, notification_type: "Test", mediums: [], batchable: false } }
+  let(:args) { { sender_id: 1, receiver_id: 1, mediums: [], batchable: false } }
   let(:notification) { HippoNotifier::Notification.new(args) }
 
   describe '#initialize' do

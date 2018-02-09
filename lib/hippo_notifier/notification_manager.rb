@@ -7,8 +7,8 @@ module HippoNotifier
         if valid_service?(service_name)
           args = {
             notification: notification,
-            service_credentials: credentials[service_name],
-            options: options
+            service_credentials: credentials[service_name.to_sym],
+            options: options[service_name.to_sym]
           }
 
           service_class = service_name.to_s.split('_').map(&:capitalize).join
