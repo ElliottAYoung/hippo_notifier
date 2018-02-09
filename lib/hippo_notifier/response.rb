@@ -18,7 +18,10 @@ module HippoNotifier
     private
 
     def return_output
-      output = {}
+      output = {
+        notifications_sent_successfully: [],
+        notifications_sent_unsuccessfully: []
+      }
 
       @results_array.each do |result|
         if result[:message] == 'ok'
