@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class SmsTestClient
   def initialize(account_sid, auth_token)
     @account_sid = account_sid
@@ -7,11 +5,11 @@ class SmsTestClient
   end
 
   def account
-    SmsTestClient.new(@account_sid, @auth_token)
+    self
   end
 
   def messages
-    SmsTestClient.new(@account_sid, @auth_token)
+    self
   end
 
   def create(args = {})
