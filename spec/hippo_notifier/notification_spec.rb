@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe HippoNotifier::Notification do
-  let(:args) { { sender_id: 1, receiver_id: 1, notification_type: "Test", medium_array: [], batchable: false } }
+  let(:args) { { sender_id: 1, receiver_id: 1, notification_type: "Test", mediums: [], batchable: false } }
   let(:notification) { HippoNotifier::Notification.new(args) }
 
   describe '#initialize' do
@@ -17,8 +17,8 @@ RSpec.describe HippoNotifier::Notification do
       expect(notification.receiver_id).to_not be_nil
     end
 
-    it 'should set #medium_array' do
-      expect(notification.medium_array).to_not be_nil
+    it 'should set #mediums' do
+      expect(notification.mediums).to_not be_nil
     end
 
     it 'should set #batchable' do
@@ -61,16 +61,16 @@ RSpec.describe HippoNotifier::Notification do
     end
   end
 
-  describe '#medium_array' do
+  describe '#mediums' do
     it 'should return an Array' do
-      expect(notification.medium_array).to be_a_kind_of(Array)
+      expect(notification.mediums).to be_a_kind_of(Array)
     end
 
     it 'should default to an expected value' do
-      args[:medium_array] = nil
+      args[:mediums] = nil
       notification = HippoNotifier::Notification.new(args)
 
-      expect(notification.medium_array).to eq([])
+      expect(notification.mediums).to eq([])
     end
   end
 

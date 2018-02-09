@@ -21,4 +21,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "simplecov", '~> 0.15'
 
+  spec.add_dependency "twilio-ruby", "~> 4.11.1"
 end
