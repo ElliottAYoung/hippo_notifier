@@ -2,7 +2,7 @@ module HippoNotifier
   module Services
     module Twilio
       def self.submit(args)
-        @creds = args[:credentials]
+        @creds = args[:service_credentials]
         @notification = args[:notification]
 
         return nil unless @notification.mediums.include?(:sms)

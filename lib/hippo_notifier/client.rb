@@ -11,17 +11,17 @@ module HippoNotifier
     end
 
     def submit(notification_hash, options = {})
-      @notification = HippoNotifier::Notification.new(notification_hash, options)
-      HippoNotifier::NotificationManager.process(@notification, @credentials)
+      @notification = HippoNotifier::Notification.new(notification_hash)
+      HippoNotifier::NotificationManager.process(@notification, @credentials, options)
     end
   end
 end
 
 #options:
 #{
-#  callback_class: ,
-#  callback_method: ,
-#  callback_args: nil
+#  klass: 'something',
+#  method: 'something',
+#  object_hash: {user: user}
 #}
 #
 #args:
@@ -31,7 +31,7 @@ end
 #       api_key: "something",
 #       api_secret: "something"
 #     },
-#     mailgun: {
+#     pusher: {
 #       api_key: "something",
 #       api_secret: "something"
 #     }

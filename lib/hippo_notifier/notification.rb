@@ -11,11 +11,6 @@ module HippoNotifier
       @notification_type = args['notification_type']
       @mediums           = args['mediums']
       @batchable         = args['batchable'] || false
-
-      # Mailgun-specific
-      @callback_class    = opts['callback_class']
-      @callback_method   = opts['callback_method']
-      @callback_args     = opts['callback_args']
     end
   end
 end

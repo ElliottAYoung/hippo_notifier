@@ -1,7 +1,7 @@
 module HippoNotifier
   module Service
     VALID = %w(
-      twilio mailgun pusher
+      twilio action_mailer pusher
     )
   end
 end
