@@ -8,7 +8,7 @@ module HippoNotifier
         @notification = args[:notification]
         @options = args[:options]
 
-        return nil unless @notification.mediums.include?(:in_app)
+        return nil unless @notification.mediums.include?('in_app')
 
         begin
           client.trigger(@options[:channel], event, @options[:adapter])

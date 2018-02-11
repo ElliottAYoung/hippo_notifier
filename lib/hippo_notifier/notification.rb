@@ -1,9 +1,13 @@
+require 'active_support/core_ext/hash/indifferent_access'
+
 module HippoNotifier
   class Notification
     attr_reader :message_data, :url, :sender_id, :receiver_id, :mediums
     attr_accessor :batchable
 
     def initialize(args = {})
+      args = ActiveSupport::HashWithIndifferentAccess.new(args)
+
       @message_data      = args[:message_data] || {}
       @url               = args[:url] || ""
       @sender_id         = args[:sender_id]

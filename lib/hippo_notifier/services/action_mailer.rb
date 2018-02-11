@@ -5,7 +5,7 @@ module HippoNotifier
         @notification = args[:notification]
         @options      = args[:options]
 
-        return nil unless @notification.mediums.include?(:email)
+        return nil unless @notification.mediums.include?('email')
 
         begin
           klass = Object.const_get(@options[:klass].to_s.split('_').map(&:capitalize).join)

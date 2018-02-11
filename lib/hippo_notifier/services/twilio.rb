@@ -8,7 +8,7 @@ module HippoNotifier
         @notification = args[:notification]
         @options = args[:options]
 
-        return nil unless @notification.mediums.include?(:sms)
+        return nil unless @notification.mediums.include?('sms')
 
         begin
           client.account.messages.create(from: @creds[:from_number] , to: @options[:phone_number], body: message)
