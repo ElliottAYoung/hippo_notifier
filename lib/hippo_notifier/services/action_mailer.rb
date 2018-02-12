@@ -3,7 +3,7 @@ module HippoNotifier
     module ActionMailer
       def self.submit(args)
         @notification = args[:notification]
-        @options      = args[:options]
+        @options      = args[:options] || {}
 
         return nil unless @notification.mediums.include?('email')
 

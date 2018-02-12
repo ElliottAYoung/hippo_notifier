@@ -3,8 +3,8 @@ require 'delayed_job_active_record'
 module HippoNotifier
   module Batches
     module Manager
-      def self.manage(args, client, batch_options = {})
-        @batch_options = batch_options
+      def self.manage(args, client, batch_options)
+        @batch_options = batch_options || {}
 
         begin
           process(args, client)
@@ -54,7 +54,7 @@ module HippoNotifier
         end
 
         def queue_job(batch, client)
-          Delayed::Job.enqueue(Jobs::BatchedNotificationJob.new(batch), run_at: timeout, batch_id: batch.id)
+          Delayed::Job.enqueue(Jobs::BatchedNotificationJob.new(batch), run_at: timeout.from_now, batch_id: batch.id)
         end
 
         def updated_notification(notification)

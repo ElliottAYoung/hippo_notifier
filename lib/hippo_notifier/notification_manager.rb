@@ -15,6 +15,7 @@ module HippoNotifier
 
           if notification.batchable
             results << HippoNotifier::Batches::Manager.manage(args, client, options[:batch])
+            break
           else
             results << HippoNotifier::Services.const_get(service_class).send('submit', args)
           end
