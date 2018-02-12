@@ -31,7 +31,7 @@ module HippoNotifier
             options: args[:options]
           }
 
-          result = Delayed::Job.find_by(batch_id: batch_data[:id])
+          result = client.batches.find { |bat| bat.id == batch_data[:id] }
 
           if result.nil?
             batch = HippoNotifier::Batches::Batch.new(batch_data)
