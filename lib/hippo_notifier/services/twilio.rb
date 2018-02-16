@@ -18,11 +18,11 @@ module HippoNotifier
             medium: 'sms',
             message: 'ok'
           }
-        rescue
+        rescue => e
           {
             service_name: 'twilio',
             medium: 'sms',
-            message: 'An error has occured with Twilio. Please check your configuration and try again'
+            message: e.to_s
           }
         end
       end

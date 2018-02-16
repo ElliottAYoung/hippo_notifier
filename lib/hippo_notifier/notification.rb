@@ -2,7 +2,7 @@ require 'active_support/core_ext/hash/indifferent_access'
 
 module HippoNotifier
   class Notification
-    attr_reader :message_data, :url, :sender_id, :receiver_id, :mediums, :sender_type, :receiver_type
+    attr_reader :message_data, :url, :sender_id, :receiver_id, :mediums, :sender_type, :receiver_type, :notification_type
     attr_accessor :batchable
 
     def initialize(args = {})
@@ -14,6 +14,7 @@ module HippoNotifier
       @receiver_id       = args[:receiver_id]
       @sender_type       = args[:sender_type]
       @receiver_type     = args[:receiver_type]
+      @notification_type = args[:notification_type]
       @mediums           = args[:mediums] || []
       @batchable         = args[:batchable] || false
 
@@ -25,7 +26,7 @@ module HippoNotifier
     def confirm_valid_parameters
       missing = []
 
-      ['sender_id', 'receiver_id', 'sender_type', 'receiver_type'].each do |param|
+      ['sender_id', 'receiver_id', 'sender_type', 'receiver_type', 'notification_type'].each do |param|
         missing << param if self.send(param).nil?
       end
 

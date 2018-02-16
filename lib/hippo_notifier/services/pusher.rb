@@ -18,11 +18,11 @@ module HippoNotifier
             medium: 'in_app',
             message: 'ok'
           }
-        rescue
+        rescue => e
           {
             service_name: 'pusher',
             medium: 'in_app',
-            message: 'An error has occured with Pusher. Please check your configuration and try again'
+            message: e.to_s
           }
         end
       end
