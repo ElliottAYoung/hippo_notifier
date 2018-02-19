@@ -31,39 +31,38 @@ module HippoNotifier
             options: args[:options]
           }
 
-          result = client.batches.find { |bat| bat.id == batch_data[:id] }
+          result = Batch.find { |b| b.receiver_id == args[:notification].receiver_id && b.sender_id == args[:notification].sender_id }
 
           if result.nil?
-            batch = HippoNotifier::Batches::Batch.new(batch_data)
-            track_on_client(batch, client)
+            batch = Batch.create(batch_data(args))
             queue_job(batch, client)
           else
-            add_to_batch(batch_data, client)
+            add_to_batch(args[:notification], result)
           end
-        end
-
-        def track_on_client(batch, client)
-          client.batches << batch
         end
 
         private
 
-        def add_to_batch(batch_data, client)
-          batch = client.batches.find { |batch| batch.id == batch_data[:id] }
-          batch.notifications << { notification: batch_data[:notification], options: batch_data[:options] }
+        def add_to_batch(notification, batch)
+          Notification.find(notification.id).update({ batch: result })
         end
 
         def queue_job(batch, client)
-          Delayed::Job.enqueue(Jobs::BatchedNotificationJob.new(batch), run_at: timeout.from_now, batch_id: batch.id)
-        end
-
-        def updated_notification(notification)
-          notification.batchable = false
-          notification
+          BatchedNotificationService.new(batch.id).delay(run_at: timeout.from_now).perform
         end
 
         def timeout
-          @batch_options[:timeout] ? @batch_options[:timeout] : 2.minutes
+          @batch_options[:timeout] ? @batch_options[:timeout] : 4.minutes
+        end
+
+        def batch_data
+          {
+            notification_id: args[:notification].id,
+            sender_id: args[:notification].sender_id,
+            sender_type: args[:notification].sender_type,
+            receiver_id: args[:notification].receiver_id,
+            receiver_type: args[:notification].receiver_type
+          }
         end
       end
     end

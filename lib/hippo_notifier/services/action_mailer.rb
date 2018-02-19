@@ -8,7 +8,6 @@ module HippoNotifier
         return nil unless @notification.mediums.include?('email')
 
         begin
-          mailer_klass = Object.const_get(@options[:klass].to_s.split('_').map(&:capitalize).join)
           mailer_klass.send('process_email', object_hash).deliver_now!
 
           {
@@ -25,22 +24,20 @@ module HippoNotifier
         end
       end
 
-      class << self
-        def object_hash
-          object_hash = {
-            subject: @notification.message_data[:default],
-            message: @notification.message_data[:email] || @notification.message_data[:default],
-            notification_type: @options[:method].to_s,
-            url: @notification.url,
-            receiver_type: @notification.receiver_type.downcase,
-            receiver_id: @notification.receiver_id
-          }
+      def self.object_hash
+        object_hash = {
+          subject: @notification.message_data[:default],
+          message: @notification.message_data[:email] || @notification.message_data[:default],
+          notification_type: @options[:method].to_s,
+          url: @notification.url,
+          receiver_type: @notification.receiver_type.downcase,
+          receiver_id: @notification.receiver_id
+        }
 
-          object_hash[@notification.receiver_type.downcase.to_sym] = @notification.receiver_id
-          object_hash[@notification.sender_type.downcase.to_sym] = @notification.sender_id
+        object_hash[@notification.receiver_type.downcase.to_sym] = @notification.receiver_id
+        object_hash[@notification.sender_type.downcase.to_sym] = @notification.sender_id
 
-          object_hash
-        end
+        object_hash
       end
     end
   end
