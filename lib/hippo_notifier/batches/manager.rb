@@ -14,27 +14,24 @@ module HippoNotifier
             medium: 'batch',
             message: 'ok'
           }
-        rescue
+        rescue => e
           {
             service_name: 'delayed_jobs',
             medium: 'batch',
-            message: 'An error has occurred with DelayedJobs. Please check the configuration and try again.'
+            message: e.to_s
           }
         end
       end
 
       class << self
         def process(args, client)
-          batch_data = {
-            notification: updated_notification(args[:notification]),
-            id: args[:notification].receiver_id,
-            options: args[:options]
-          }
+          binding.pry
 
-          result = Batch.find { |b| b.receiver_id == args[:notification].receiver_id && b.sender_id == args[:notification].sender_id }
+          result = ::Batch.find { |b| b.receiver_id == args[:notification].receiver_id && b.sender_id == args[:notification].sender_id }
 
           if result.nil?
-            batch = Batch.create(batch_data(args))
+            batch = ::Batch.create(batch_data(args))
+            add_to_batch(args[:notification], batch)
             queue_job(batch, client)
           else
             add_to_batch(args[:notification], result)
@@ -44,7 +41,7 @@ module HippoNotifier
         private
 
         def add_to_batch(notification, batch)
-          Notification.find(notification.id).update({ batch: result })
+          ::Notification.find(notification.id).update({ batch: batch })
         end
 
         def queue_job(batch, client)
@@ -55,9 +52,8 @@ module HippoNotifier
           @batch_options[:timeout] ? @batch_options[:timeout] : 4.minutes
         end
 
-        def batch_data
+        def batch_data(args)
           {
-            notification_id: args[:notification].id,
             sender_id: args[:notification].sender_id,
             sender_type: args[:notification].sender_type,
             receiver_id: args[:notification].receiver_id,

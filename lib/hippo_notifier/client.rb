@@ -6,7 +6,6 @@ require 'hippo_notifier/services/action_mailer'
 require 'hippo_notifier/services/pusher'
 require 'hippo_notifier/services/twilio'
 require 'hippo_notifier/batches/manager'
-require 'hippo_notifier/batches/batch'
 require 'hippo_notifier/errors/missing_parameter_error'
 
 module HippoNotifier

@@ -8,6 +8,7 @@ module HippoNotifier
         return nil unless @notification.mediums.include?('email')
 
         begin
+          mailer_klass = Object.const_get(@options[:klass].to_s.split('_').map(&:capitalize).join)
           mailer_klass.send('process_email', object_hash).deliver_now!
 
           {
