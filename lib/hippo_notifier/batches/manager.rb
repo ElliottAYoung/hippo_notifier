@@ -25,8 +25,6 @@ module HippoNotifier
 
       class << self
         def process(args, client)
-          binding.pry
-
           result = ::Batch.find { |b| b.receiver_id == args[:notification].receiver_id && b.sender_id == args[:notification].sender_id }
 
           if result.nil?
