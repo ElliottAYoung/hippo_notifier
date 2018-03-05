@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pusher"
   spec.add_dependency "delayed_job_active_record", "~> 4.1.2"
   spec.add_dependency "activesupport", "~> 4.2.9"
+  spec.add_dependency "bitly", "~> 1.1"
 end

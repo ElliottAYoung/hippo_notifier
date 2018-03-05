@@ -35,6 +35,10 @@ module HippoNotifier
         end
 
         def message
+          "#{notification_message} - Click here to view: #{Shortener.short_url(@notification.url)}"
+        end
+
+        def notification_message
           message_data = @notification.message_data
 
           message_data[:sms] ? message_data[:sms] : message_data[:default]
