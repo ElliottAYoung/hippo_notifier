@@ -32,7 +32,8 @@ module HippoNotifier
           notification_type: @options[:method].to_s,
           url: @notification.url,
           receiver_type: @notification.receiver_type.downcase,
-          receiver_id: @notification.receiver_id
+          receiver_id: @notification.receiver_id,
+          options: @options
         }
 
         object_hash[@notification.receiver_type.downcase.to_sym] = @notification.receiver_id
