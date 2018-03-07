@@ -27,7 +27,7 @@ module HippoNotifier
 
       def self.object_hash
         object_hash = {
-          subject: @notification.message_data[:default],
+          subject: @notification.message_data[:subject] || @notification.message_data[:default],
           message: @notification.message_data[:email] || @notification.message_data[:default],
           notification_type: @options[:method].to_s,
           url: @notification.url,
