@@ -5,6 +5,7 @@ require 'hippo_notifier/service'
 require 'hippo_notifier/services/action_mailer'
 require 'hippo_notifier/services/pusher'
 require 'hippo_notifier/services/twilio'
+require 'hippo_notifier/services/pusher/refresher'
 require 'hippo_notifier/batches/manager'
 require 'hippo_notifier/errors/missing_parameter_error'
 require 'hippo_notifier/support/bitly'
@@ -25,34 +26,10 @@ module HippoNotifier
       results = HippoNotifier::NotificationManager.process(@notification, self, options)
       HippoNotifier::Response.new(results)
     end
+
+    def refresh(args = {})
+      results = HippoNotifier::Services::Pusher::Refresher.refresh_data_signal(args, @credentials)
+      HippoNotifier::Response.new(results)
+    end
   end
 end
-
-#options:
-# { {
-# twilio: {
-#   phone_number: "something",
-# },
-# pusher: {
-#   channel: "something",
-#   event: "something",
-#   adapter: "something"
-# },
-# action_mailer: {
-#   klass: "something",
-#   object_hash: {},
-#   method: "something"
-# } }
-#args:
-# {
-#   credentials: {
-#     twilio: {
-#       api_key: "something",
-#       api_secret: "something"
-#     },
-#     pusher: {
-#       api_key: "something",
-#       api_secret: "something"
-#     }
-#   }
-# }
